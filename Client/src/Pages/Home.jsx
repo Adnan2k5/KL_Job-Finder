@@ -1,6 +1,6 @@
 import { Card, Modal } from "antd";
 import { Navbar } from "../Components/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   CardDescription,
@@ -10,8 +10,18 @@ import {
 } from "../Components/ui/card";
 import { Input } from "../Components/ui/input";
 import { Footer } from "../Components/Footer";
+import { getAllUser } from "../Api/UserApi";
 
 export const Home = () => {
+
+  useEffect( () => {
+      const fetchUser = async () => {
+          const response = await getAllUser();
+          console.log(response.data[0]);
+      }
+      fetchUser();
+  }, []);
+
   const user = useSelector((state) => state.user);
   const Jobs = [
     {

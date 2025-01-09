@@ -10,18 +10,9 @@ import {
 } from "../Components/ui/card";
 import { Input } from "../Components/ui/input";
 import { Footer } from "../Components/Footer";
-import { getAllUser } from "../Api/UserApi";
 
 
 export const Home = () => {
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await getAllUser();
-      console.log(response.data[0]);
-    };
-    fetchUser();
-  }, []);
-
   const user = useSelector((state) => state.user);
   const Jobs = [
     {
@@ -96,7 +87,6 @@ export const Home = () => {
     setjobId(e.target.id);
     setshowModal(true);
   };
-  console.log()
   const [jobId, setjobId] = useState(0);
   const [showModal, setshowModal] = useState(false);
   return (

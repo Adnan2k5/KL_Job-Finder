@@ -27,5 +27,11 @@ public class BackendApplication {
     @PostMapping(value = "/api/register")
     public User registerUser(@RequestBody User user){
         return userControllers.registerUser(user);
-    }   
+    } 
+    
+    @PostMapping("/api/login")
+    public User postMethodName(@RequestBody User user) {
+        return userControllers.loginUser(user);
+    }
+    
 }

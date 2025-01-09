@@ -16,9 +16,9 @@ export const Footer = () => {
         </div>
         <div className="socials px-3 mt-auto">
             <ul className='flex space-x-3 text-xl'>
-                <li className='hover:text-purple-300'><Instagram /></li>
-                <li className='hover:text-blue-500'><Linkedin /></li>
-                <li className='hover:text-blue-300'><Twitter /></li>
+                <li className='hover:text-purple-300 duration-300'><Instagram /></li>
+                <li className='hover:text-blue-500 duration-300'><Linkedin /></li>
+                <li className='hover:text-blue-300 duration-300'><Twitter /></li>
             </ul>
         </div>
     </div>

@@ -18,7 +18,7 @@ import { mockUser } from "../Data/mockUser";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../Api/UserApi";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../Library/userSlice";
+import {  loginUser } from "../Library/userSlice";
 import { use } from "react";
 import { Loader } from "../Components/Loader";
 import { toast } from "sonner";
@@ -38,15 +38,15 @@ export const LoginPage = () => {
   const Login = async (data) => {
     try {
       setloader(true);
-      const res = await dispatch(getUser(data));
-      if (res.payload === 404) {
-        toast.error("Invalid Credentials");
-        setloader(false);
-      } else {
-        setloader(false);
-        toast.success("Login Successeful");
+      const res = await dispatch(loginUser(data));
+      if(res.payload !== ""){
+        toast.success("Login Successful");
+        Navigate("/")
         reset();
-        Navigate("/");
+      }
+      else{
+        toast.error("Invalid Credentials");
+        setloader(false); 
       }
     } catch {
       console.log(error);
@@ -58,10 +58,19 @@ export const LoginPage = () => {
     try{
       setloader(true)
       const res = await registerUser(data);
-      console.log(res);
+      if(res.data){
+        toast.success("Registered Successfully");
+        reset();
+        setloader(false);
+      }
+      else{
+        toast.error("Registration Failed");
+        setloader(false);
+      }
     }
     catch(err){
       console.log(err);
+      setloader(false);
     }
    
   }
@@ -152,6 +161,14 @@ export const LoginPage = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 px-3">
+                  <div className="space-y-1">
+                      <input
+                        autoComplete="off"
+                        className="text-black w-full py-2 px-3 rounded-xl"
+                        {...register("name")}
+                        placeholder="Name"
+                      />
+                    </div>
                     <div className="space-y-1">
                       <input
                         autoComplete="off"
@@ -181,10 +198,10 @@ export const LoginPage = () => {
                         {...register("cnfpass")}
                         placeholder="Confirm Password"
                       />
-                    </div>
-                    {passerror && (
-                      <p className="text-red-500">Password does not match</p>
-                    )}
+                      </div>
+                      {passerror && (
+                        <p className="text-red-500">Password does not match</p>
+                      )}
                   </CardContent>
                   <CardFooter className="w-full flex items-center justify-center">
                     <button

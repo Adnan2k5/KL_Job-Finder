@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Button, Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../Library/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader } from "./Loader";
+import { loginUser } from "../Library/userSlice";
 
 export const Navbar = () => {
   const Navigate = useNavigate();
@@ -38,7 +38,8 @@ export const Navbar = () => {
   };
 
   const handleLogout = () => {
-    dispatch(getUser(null));
+    setData(null);
+    dispatch(loginUser(null));
     toast.success("Logout Successful");
     setOpen(false);
   };
@@ -82,9 +83,6 @@ export const Navbar = () => {
             <Link className="flex gap-2" to="/login">
               <Button color="primary" variant="solid">
                 Login
-              </Button>
-              <Button color="primary" variant="solid">
-                Sign Up
               </Button>
             </Link>
           </div>

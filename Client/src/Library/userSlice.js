@@ -1,26 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { mockUser } from '../Data/mockUser';
 import client from '../AxiosClient/AxiosClient';
+import { login } from '../Api/UserApi';
 
 
-export const getUser = createAsyncThunk(
+export const loginUser = createAsyncThunk(
   'user/getUser', async(data) => {
       try{
-        const { email, password } = data;
-        if(email === mockUser.email && password === mockUser.password){
-          return mockUser;
+        if(data === null){
+          return null;
         }
-        else{
-          return 404
-        }
+        const res = await login(data);
+        return res.data;
       }
-      catch(error){
-        console.log(error);
-      }
+      catch(error){}
   }
 )
-
-
 export const userSlice = createSlice({
   name: 'User',
   initialState: {
@@ -30,15 +24,15 @@ export const userSlice = createSlice({
   },
   reducers: {},
   extraReducers : (builder) => {
-    builder.addCase(getUser.pending, (state)=>{
+    builder.addCase(loginUser.pending, (state)=>{
         state.loading = true,
         state.error = null
     })
-    builder.addCase(getUser.fulfilled, (state, action)=>{
+    builder.addCase(loginUser.fulfilled, (state, action)=>{
         state.loading = false,
         state.data = action.payload
     })
-    builder.addCase(getUser.rejected, (state, action)=>{
+    builder.addCase(loginUser.rejected, (state, action)=>{
         state.loading = false,
         state.error = action.error.message
     })

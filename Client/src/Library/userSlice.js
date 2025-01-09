@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { mockUser } from '../Data/mockUser';
+import client from '../AxiosClient/AxiosClient';
 
 
 export const getUser = createAsyncThunk(

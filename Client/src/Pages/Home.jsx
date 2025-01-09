@@ -12,14 +12,14 @@ import { Input } from "../Components/ui/input";
 import { Footer } from "../Components/Footer";
 import { getAllUser } from "../Api/UserApi";
 
-export const Home = () => {
 
-  useEffect( () => {
-      const fetchUser = async () => {
-          const response = await getAllUser();
-          console.log(response.data[0]);
-      }
-      fetchUser();
+export const Home = () => {
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await getAllUser();
+      console.log(response.data[0]);
+    };
+    fetchUser();
   }, []);
 
   const user = useSelector((state) => state.user);
@@ -96,6 +96,7 @@ export const Home = () => {
     setjobId(e.target.id);
     setshowModal(true);
   };
+  console.log()
   const [jobId, setjobId] = useState(0);
   const [showModal, setshowModal] = useState(false);
   return (
@@ -150,26 +151,30 @@ export const Home = () => {
               console.log("Applied");
             }}
             onCancel={() => setshowModal(false)}
+            okText="Apply"
+
           >
             <form>
               <Card>
-                <CardTitle>{showModal && Jobs[jobId - 1].title}</CardTitle>
-                <CardContent>
-                  Company : {showModal && Jobs[jobId - 1].company}
+                <CardTitle className="text-3xl font-bold">
+                  {showModal && Jobs[jobId - 1].title}
+                </CardTitle>
+                <CardContent className="text-xl font-semibold">
+                  {showModal && Jobs[jobId - 1].company}
                 </CardContent>
-                <CardContent>
-                  Location : {showModal && Jobs[jobId - 1].location}
+                <CardContent className="font-semibold">
+                  Location : {showModal && Jobs[jobId - 1].location} 📍
                 </CardContent>
-                <div className="input flex flex-col">
-                  <Input
-                    defaultValue={
-                      showModal && user.data
-                        ? `${user.data.name}`
-                        : "Enter your name"
-                    }
-                    placeholder="Enter your name"
-                    className="mt-2"
-                  />
+                <div className="input mt-3 flex flex-col">
+                    <Input
+                      defaultValue={
+                        showModal && user.data
+                          ? `${user.data.name}`
+                          : "Enter your name"
+                      }
+                      placeholder="Enter your name"
+                      className="mt-2 border rounded-xl"
+                    />
                   <Input
                     defaultValue={
                       showModal && user.data
@@ -177,18 +182,19 @@ export const Home = () => {
                         : "Enter your email"
                     }
                     placeholder="Enter your email"
-                    className="mt-2"
+                    className="mt-3 border rounded-xl"
                   />
                 </div>
-                <div className="sal flex flex-col">
-                  <label className="text-black mt-2">Salary Expectations</label>
-                  <div className="$ gap-2 flex items-center">
+                <div className="sal flex mt-5 flex-col">
+                  <label className="text-black mt-2 font-semibold">Salary Expectations</label>
+                  <div className="$ gap-2 flex mt-2 items-center">
                     <span className="text-lg">$</span>
                     <Input
                       placeholder="Expected Salary"
                       defaultValue={showModal && Jobs[jobId - 1].salary}
-                      className=""
+                      className="border rounded-xl"
                     />
+                    
                   </div>
                 </div>
               </Card>
@@ -196,7 +202,7 @@ export const Home = () => {
           </Modal>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { mockUser } from "../Data/mockUser";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../Api/UserApi";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../Library/userSlice";
 import { use } from "react";
@@ -53,6 +54,17 @@ export const LoginPage = () => {
     }
   };
 
+  const signup = async (data) => {
+    try{
+      setloader(true)
+      const res = await registerUser(data);
+      console.log(res);
+    }
+    catch(err){
+      console.log(err);
+    }
+   
+  }
   const checkPass = () => {
     if (pass && cnfpass) {
       if (pass === cnfpass) {
@@ -67,10 +79,6 @@ export const LoginPage = () => {
     checkPass();
   }, [pass, cnfpass]);
 
-  const Register = (data) => {
-    const { email, password } = data;
-    console.log("User Registered", email, password);
-  };
 
   return (
     <div className="w-screen h-[100vh] flex justify-center items-center bg-gradient-to-tr from-blue-100 to-white">
@@ -135,7 +143,7 @@ export const LoginPage = () => {
             </div>
           </TabsContent>
           <TabsContent className="z-30" value="register">
-            <form onSubmit={handleSubmit(Register)}>
+            <form onSubmit={handleSubmit(signup)}>
               <div className="login flex flex-col">
                 <Card className="w-full mt-4">
                   <CardHeader>
